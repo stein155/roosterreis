@@ -34,26 +34,12 @@ json :: Parser JSON
 json = ws *> jsValue
 
 jsValue :: Parser JSON
-jsValue = choice [jsNull,jsBool,jsObject,jsArray,jsNumber,jsString]
+jsValue = choice [jsNull,jsObject,jsArray,jsNumber,jsString]
 
 ----------------------------------------------------------------
 
--- |
---
--- >>> parseJSON "  null "
--- Right JSNull
 jsNull :: Parser JSON
-jsNull = jsAtom "null" JSNull
-
--- |
---
--- >>> parseJSON "  false "
--- Right (JSBool False)
--- >>> parseJSON "true"
--- Right (JSBool True)
-jsBool :: Parser JSON
-jsBool = jsAtom "false" (JSBool False)
-     <|> jsAtom "true"  (JSBool True)
+jsNull = jsAtom "null" JSNull <|> jsAtom "false" (JSBool False) <|> jsAtom "true"  (JSBool True)
 
 ----------------------------------------------------------------
 

@@ -29,7 +29,8 @@ library
   exposed-modules:
       Lib,
       JSON,
-      ICS
+      ICS,
+      OV
   other-modules:
       Paths_roosterreis
   hs-source-dirs:
