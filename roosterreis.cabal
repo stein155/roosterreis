@@ -27,7 +27,8 @@ source-repository head
 
 library
   exposed-modules:
-      Lib,
+      Date,
+      ISAS,
       JSON,
       OV
   other-modules:

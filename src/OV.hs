@@ -1,16 +1,14 @@
 module OV ( findJourney ) where
 
-import Network.HTTP
+import Network
 import JSON
+import Date
 
-get :: String -> IO String
-get url = simpleHTTP (getRequest url) >>= getResponseBody
+findJourney :: String -> String -> String -> IO ()
+findJourney from to dateTime = performRequest ("http://api.9292.nl/0.1/journeys?before=1&sequence=1&byFerry=true&bySubway=true&byBus=true&byTram=true&byTrain=true&lang=nl-NL&from="++from++"&dateTime="++dateTime++"&searchType=arrival&interchangeTime=standard&after=5&to="++to) >>= printJourney
 
-findJourney :: IO ()
-findJourney = get "http://api.9292.nl/0.1/journeys?before=1&sequence=1&byFerry=true&bySubway=true&byBus=true&byTram=true&byTrain=true&lang=nl-NL&from=station-zevenaar&dateTime=2020-10-21T1754&searchType=departure&interchangeTime=standard&after=5&to=station-arnhem-presikhaaf" >>= showJourney
-
-showJourney :: String -> IO ()
-showJourney value = 
+printJourney :: String -> IO ()
+printJourney value = 
  let result = parseJSON value
  in case result of
   Right (JSONObject document) -> do
@@ -42,7 +40,7 @@ printLeg leg = case leg of
 
   putStr "\n"
 
-  putStr "Opstappen: "
+  putStr "- Opstappen: "
 
   case lookup "stops" object of
    Just (JSONArray stops) -> do
@@ -50,7 +48,7 @@ printLeg leg = case leg of
      (JSONObject firstStop) -> do
       case lookup "departure" firstStop of
        Just (JSONString departure) -> do
-        putStr $ departure
+        putStr $ formatDateReadable $ departure
 
       putStr " - "
 
