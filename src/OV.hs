@@ -1,4 +1,6 @@
-module OV ( findJourney ) where
+module OV
+ (findJourney)
+ where
 
 import Network
 import JSON

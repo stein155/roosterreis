@@ -1,10 +1,10 @@
 module Date 
- ( formatDateForIsas
- , formatDateForOv
- , formatDateReadable
- , today
- , tomorrow
- ) where
+ (formatDateForIsas
+ ,formatDateForOv
+ ,formatDateReadable
+ ,today
+ ,tomorrow)
+ where
 
 import Data.Time.Calendar
 import Data.Time.Clock

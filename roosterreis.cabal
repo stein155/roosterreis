@@ -8,12 +8,12 @@ cabal-version: 1.12
 
 name:           roosterreis
 version:        0.1.0.0
-description:    Please see the README on GitHub at <https://github.com/githubuser/roosterreis#readme>
-homepage:       https://github.com/githubuser/roosterreis#readme
-bug-reports:    https://github.com/githubuser/roosterreis/issues
-author:         Author name here
-maintainer:     example@example.com
-copyright:      2020 Author name here
+description:    School excersie - Getting an public transport route based on my school schedule.
+homepage:       https://github.com/stein155/roosterreis#readme
+bug-reports:    https://github.com/stein155/roosterreis/issues
+author:         Stein Milder
+maintainer:     info@steinmilder.nl
+copyright:      2020 Stein Milder
 license:        BSD3
 license-file:   LICENSE
 build-type:     Simple
@@ -23,14 +23,15 @@ extra-source-files:
 
 source-repository head
   type: git
-  location: https://github.com/githubuser/roosterreis
+  location: https://github.com/stein155/roosterreis
 
 library
   exposed-modules:
-      Date,
-      ISAS,
-      JSON,
-      OV
+      Date
+    , Network
+    , JSON
+    , ISAS
+    , OV
   other-modules:
       Paths_roosterreis
   hs-source-dirs:
@@ -38,8 +39,6 @@ library
   build-depends:
       base >=4.7 && <5
     , HTTP
-    , split
-    , bytestring
     , parsec
     , time
   default-language: Haskell2010

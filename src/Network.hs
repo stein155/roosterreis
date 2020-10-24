@@ -1,6 +1,6 @@
 module Network
-    ( performRequest
-    ) where
+ (performRequest)
+where
 
 import Network.HTTP
 

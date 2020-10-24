@@ -1,7 +1,7 @@
-module JSON (
-      JSON(..)
-    , parseJSON
-  ) where
+module JSON
+ (JSON(..)
+ ,parseJSON)
+ where
 
 import Control.Monad
 import Control.Applicative hiding ((<|>), many)
@@ -24,7 +24,7 @@ json :: Parser JSON
 json = ws *> value
 
 value :: Parser JSON
-value = lexeme $ (jsonNumber <|> jsonNull <|> jsonBool <|> jsonString <|> jsonObject <|> jsonArray)
+value = lexeme $ (jsonNull <|> jsonBool <|> jsonString <|> jsonNumber <|> jsonObject <|> jsonArray)
 
 jsonNull :: Parser JSON
 jsonNull = do
