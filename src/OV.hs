@@ -1,7 +1,7 @@
 module OV ( findJourney ) where
 
 import Network.HTTP
-import ICS
+import JSON
 
 get :: String -> IO String
 get url = simpleHTTP (getRequest url) >>= getResponseBody
@@ -11,33 +11,33 @@ findJourney = get "http://api.9292.nl/0.1/journeys?before=1&sequence=1&byFerry=t
 
 showJourney :: String -> IO ()
 showJourney value = 
- let result = parseICS value
+ let result = parseJSON value
  in case result of
-  Right (ICSObject document) -> do
+  Right (JSONObject document) -> do
    case lookup "journeys" document of
-    Just (ICSArray journeys) -> do
+    Just (JSONArray journeys) -> do
      case journeys!!0 of
-      (ICSObject journey) -> do
+      (JSONObject journey) -> do
        case lookup "legs" journey of
-        Just (ICSArray legs) -> do
+        Just (JSONArray legs) -> do
          printLegs $ legs
 
-printLegs :: [ICS] -> IO ()
+printLegs :: [JSON] -> IO ()
 printLegs legs = mapM_ printLeg legs
 
-printLeg :: ICS -> IO ()
+printLeg :: JSON -> IO ()
 printLeg leg = case leg of
- (ICSObject object) -> do
+ (JSONObject object) -> do
   case lookup "mode" object of
-   Just (ICSObject mode) -> do
+   Just (JSONObject mode) -> do
     case lookup "name" mode of
-     Just (ICSString name) -> do
+     Just (JSONString name) -> do
       putStr $ name     
 
   putStr " - "
 
   case lookup "destination" object of
-   Just (ICSString destination) -> do
+   Just (JSONString destination) -> do
     putStr $ destination
 
   putStr "\n"
@@ -45,25 +45,25 @@ printLeg leg = case leg of
   putStr "Opstappen: "
 
   case lookup "stops" object of
-   Just (ICSArray stops) -> do
+   Just (JSONArray stops) -> do
     case stops!!0 of
-     (ICSObject firstStop) -> do
+     (JSONObject firstStop) -> do
       case lookup "departure" firstStop of
-       Just (ICSString departure) -> do
+       Just (JSONString departure) -> do
         putStr $ departure
 
       putStr " - "
 
       case lookup "location" firstStop of
-       Just (ICSObject location) -> do
+       Just (JSONObject location) -> do
         case lookup "stationType" location of
-         Just (ICSString stationType) -> do
+         Just (JSONString stationType) -> do
           putStr $ stationType
         
         putStr " "
 
         case lookup "name" location of
-         Just (ICSString name) -> do
+         Just (JSONString name) -> do
           putStr $ name
 
       putStr "\n\n"

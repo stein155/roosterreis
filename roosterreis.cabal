@@ -28,7 +28,7 @@ source-repository head
 library
   exposed-modules:
       Lib,
-      ICS,
+      JSON,
       OV
   other-modules:
       Paths_roosterreis
